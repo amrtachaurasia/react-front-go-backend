@@ -11,7 +11,7 @@ This is a basic blogging api, with golang backend, sqlite and react frontend. Th
 1. The front-end is an experimental build, so you need not install anything.
 2. cd react-front-go-backend/frontend
 3. Run index.html on a browser.
-## What did I learnt whie doing this ?
+## What did I learnt while doing this ?
 ### For backend in go, common pitfalls and flight-rules:
 1. w.WriteHeader(310), it is used to return custom response.
 2. w.Header().Set("Content-Type", "application/json"), is used to edit default http headers.
