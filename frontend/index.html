@@ -10,7 +10,10 @@
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
   </head>
   <body>
-
+<div class="sidenavtop">
+  <a href = "index.html">Home</a>
+  <a href = "index2.html">Add New article</a>
+</div>
     <div id="root"></div>
     <!-- <div class="content"> </div> -->
     <script type="text/babel">
@@ -20,8 +23,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       repos: [] ,
-      content: []
+      content: [],
+      likebutton: 0,
+      likes: [],
+      blogid: ""
     }
+    this.handleLikeClick = this.handleLikeClick.bind(this);
   }
 
   componentDidMount() {
@@ -33,19 +40,42 @@ class App extends React.Component {
   })
 }
 
-  buttonClicked(name) {
+buttonClicked(name) {
       console.log('Button was clicked!'+name)
   fetch('http://localhost:8080/blog/'+name)
   .then(response => response.json())
   .then(json => {
     console.log(json)
     this.setState({content: json})
+    this.setState({likebutton: 1})
+    this.setState({blogid: name})
     console.log("hi there "+this.state.content.Title)
 
   })
   }
+handleLikeClick() {
+  let data1
+  data1={
+      Name: this.state.blogid,
+      Description: "like"
+    };
+  console.log(data1)
+    fetch('http://localhost:8080/like', {
+    method: 'post',
+    body: JSON.stringify(data1)
+  })
+  }
 
 render() {
+  const like = this.state.likebutton;
+  let button1
+  if (like){
+      // <a onClick={this.buttonClicked1}>Like</a>
+      button1 = <LikeButton onClick={this.handleLikeClick}/>;
+    }
+  else {
+    button1 = <Hidden1/>;
+  }
   return (
     <div>
       <div class="sidenav">
@@ -61,27 +91,27 @@ render() {
     </div>
     <h1 class="content">{this.state.content.Title}</h1>
       <p class="content">{this.state.content.Content}</p>
+      {button1}
     </div>
 
   )
+
+
 }
- }
-class Content extends React.Component {
-  render() {
-    const myLogger = new Logger();
-    myLogger.info('something witty');
-     return (
-        <div>
-           <h3>{this.props.myDataProp.Title}</h3>
-        </div>
-     );
-  }
+}
+function LikeButton(props) {
+  return (
+    <button class="button button2" onClick={props.onClick}>Like</button>
+  )
+}
+function Hidden1(props) {
+  return(
+<button></button>
+  )
 }
   ReactDOM.render(<App/>,document.getElementById('root'));
     </script>
-    <div class = "content">
-    <a href="index2.html">Add New Blog</a>
-    <div>
+
     <!--
       Note: this page is a great way to try React but it's not suitable for production.
       It slowly compiles JSX with Babel in the browser and uses a large development build of React.

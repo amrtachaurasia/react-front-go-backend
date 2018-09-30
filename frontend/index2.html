@@ -10,8 +10,11 @@
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
   </head>
   <body>
-
-    <div id="root"></div>
+<div class="sidenavtop">
+  <a href = "index.html">Home</a>
+  <a href = "index2.html">Add New article</a>
+</div>
+    <div class="content1" id="root"></div>
     <!-- <div class="content"> </div> -->
     <script type="text/babel">
 class MyForm extends React.Component {
@@ -28,7 +31,7 @@ class MyForm extends React.Component {
       method: 'POST',
       body: data,
     });
-    console.log(body)
+    alert("Blog Posted");
   }
 
   render() {
@@ -42,16 +45,13 @@ class MyForm extends React.Component {
         <p></p>
         <textarea rows="10" cols="50" id="content" name="content" type="text" />
         <p></p>
-        <button>Send data!</button>
+        <button id="button">Add new Blog</button>
       </form>
     );
   }
 }
   ReactDOM.render(<MyForm/>,document.getElementById('root'));
     </script>
-    <div class = "content">
-    <a href="index2.html">Add New Blog</a>
-    <div>
     <!--
       Note: this page is a great way to try React but it's not suitable for production.
       It slowly compiles JSX with Babel in the browser and uses a large development build of React.

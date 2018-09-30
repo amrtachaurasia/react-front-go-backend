@@ -21,6 +21,10 @@ type Blog struct {
 	Title	 string
 	Content	 string
 }
+type Jsonx struct {
+	Name	 int `json:"Name"`
+	Description	 string `json:"Description"`
+}
 func paramHandler(w http.ResponseWriter, r *http.Request) {
 
 }
@@ -131,11 +135,38 @@ func getProduct(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintln(w, str1)
 	// get a specific product
 }
+func addlike(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	log.Printf( "entered")
+	var p Jsonx
+	dec := json.NewDecoder(r.Body)
+	log.Printf( "entered144")
+	err := dec.Decode(&p)
+	id :=p.Name
+	time := id
+	// time, _ := strconv.Atoi(id)
+	// log.Printf( "id, %d", time)	
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	log.Printf( "entered150")
+	idx :=p.Description
+	// id := mux.Vars(r)["name"]
+    // timex, _:= strconv.Atoi(idx)
+	log.Printf( "idx, %d", idx)
+	database, _ := sql.Open("sqlite3", "./blog.db")
+    rows1, _ := database.Prepare("UPDATE people SET like = like + 1 WHERE id = ?")
+	_,err3 := rows1.Exec(time+1)
+    checkErr(err3)	
 
+}
 func main() {
 	r := mux.NewRouter()
 	// match only GET requests on /product/
 	r.HandleFunc("/", listProducts).Methods("GET")
+	r.HandleFunc("/like", addlike).Methods("POST")
 
 	// match only POST requests on /product/
 	r.HandleFunc("/blogger/", addProduct).Methods("POST")
