@@ -1,5 +1,5 @@
 ## What's wrong with this project ?
-This is a basic blogging api, with golang backend, sqlite and react frontend. There are a lot of redundant codes, and bad software practices such as server.go contains code for sqlite as well which is not proper. But yeah I was learning when I wrote it.
+This is a basic blogging api, with golang backend, sqlite and react frontend. There are a lot of redundant codes, and bad software practices such as server.go contains code for sqlite as well which is not proper. But yeah I was learning when I wrote it. I am aware of the fact that react/babel is in development build.
 ![Page1](https://i.imgur.com/cDjJMJA.png)
 ![Page2](https://i.imgur.com/pH1pv4f.png)
 ## How to run this project ?
