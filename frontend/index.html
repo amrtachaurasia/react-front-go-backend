@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+
+    <div id="root"></div>
+    <!-- <div class="content"> </div> -->
+    <script type="text/babel">
+    
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      repos: [] ,
+      content: []
+    }
+  }
+
+  componentDidMount() {
+  fetch('http://localhost:8080')
+  .then(response => response.json())
+  .then(json => {
+    console.log(json)
+    this.setState({repos: json})
+  })
+}
+
+  buttonClicked(name) {
+      console.log('Button was clicked!'+name)
+  fetch('http://localhost:8080/blog/'+name)
+  .then(response => response.json())
+  .then(json => {
+    console.log(json)
+    this.setState({content: json})
+    console.log("hi there "+this.state.content.Title)
+
+  })
+  }
+
+render() {
+  return (
+    <div>
+      <div class="sidenav">
+      {this.state.repos.map((repo, i) => {
+        let url1 = "localhost:8080/" + repo
+        // const element = <h1>ravi</h1>
+        return (
+          <a onClick={()=>this.buttonClicked(i)}>{repo}</a>
+          )
+      }
+
+      )}
+    </div>
+    <h1 class="content">{this.state.content.Title}</h1>
+      <p class="content">{this.state.content.Content}</p>
+    </div>
+
+  )
+}
+ }
+class Content extends React.Component {
+  render() {
+    const myLogger = new Logger();
+    myLogger.info('something witty');
+     return (
+        <div>
+           <h3>{this.props.myDataProp.Title}</h3>
+        </div>
+     );
+  }
+}
+  ReactDOM.render(<App/>,document.getElementById('root'));
+    </script>
+    <div class = "content">
+    <a href="index2.html">Add New Blog</a>
+    <div>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      http://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      http://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+  </body>
+</html>
