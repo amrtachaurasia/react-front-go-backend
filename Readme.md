@@ -60,4 +60,5 @@ fetch('http://localhost:8080/blog/'+name)
 ```
 7. this is important as fetch passes the return value to then and is passed as response, and response.json() is passed as json in 
 .then()
+8. Whie doing a post or get request using javasvript then, always add "http://localhost:8080" rather than "localhost:8080" to avoid browser CORS error. 
 
